@@ -42,7 +42,7 @@ public class IdlingTest {
     }
 
     @Test
-    public void testName() {
+    public void idlingTest() {
         ViewInteraction menu = onView(isAssignableFrom(AppCompatImageButton.class));
         menu.check(matches(isDisplayed()));
         menu.perform(click());
@@ -60,6 +60,38 @@ public class IdlingTest {
         ViewInteraction element = onView(
                 allOf(withId(R.id.item_number), withText("7")));
         element.check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void customMatcherTest() {
+        ViewInteraction menu = onView(isAssignableFrom(AppCompatImageButton.class));
+        menu.check(matches(isDisplayed()));
+        menu.perform(click());
+
+        ViewInteraction gallery = onView(withId(R.id.nav_gallery));
+        gallery.check(matches(isDisplayed()));
+        gallery.perform(click());
+
+        ViewInteraction recyclerView = onView(withId(R.id.recycle_view));
+        recyclerView.check(matches(isDisplayed()));
+
+
+        ViewInteraction element = onView(CustomViewMatcher.recyclerViewSizeMatcher(10));
+        element.check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void customAssertionsTest() {
+        ViewInteraction menu = onView(isAssignableFrom(AppCompatImageButton.class));
+        menu.check(matches(isDisplayed()));
+        menu.perform(click());
+
+        ViewInteraction gallery = onView(withId(R.id.nav_gallery));
+        gallery.check(matches(isDisplayed()));
+        gallery.perform(click());
+
+        ViewInteraction recyclerView = onView(withId(R.id.recycle_view));
+        recyclerView.check(CustomViewAssertions.isRecycleView());
     }
 }
 
